@@ -1,13 +1,14 @@
 package com.ohgiraffers.practice1.run;
 
 import com.ohgiraffers.practice1.EmployeeDTO;
+import com.ohgiraffers.practice1.PracticeException;
 import com.ohgiraffers.practice1.StudentDTO;
 
 import java.util.Scanner;
 
 public class Application {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
 
         Scanner sc = new Scanner(System.in);
 
@@ -26,7 +27,7 @@ public class Application {
         }
 
         // 최대 10명의 사원 정보를 기록할 수 있게 배열을 할당
-        EmployeeDTO[] employees = new EmployeeDTO[10];
+        EmployeeDTO[] employees = new EmployeeDTO[3];
 
         // 사원들의 정보를 키보드로 계속 입력 받고 --> while(true) 무한 반복문을 통해
         // 계속 추가할 것인지 물어보고, 대소문자 상관없이 ‘y’이면 계속 객체 추가
@@ -62,14 +63,17 @@ public class Application {
             switch (option) {
                 case 'y' :
                 case 'Y' :
-                    if(employees[9] == null ) {
-                        System.out.println("새로운 사원 정보를 입력합니다.");
-                        break;
-                    } else {
-                        System.out.println("입력 가능한 총 사원수를 초과하였습니다!!");
-                        System.out.println("프로그램을 종료합니다.");
-                        return;
+                    try {
+                        if(employees[employees.length-1] == null ) {
+                            System.out.println("새로운 사원 정보를 입력합니다.");
+                            break;
+                        } else {
+                            throw new PracticeException("입력 가능한 총 사원수를 초과하였습니다!!");
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
+
                 default :
                     // 현재 기록된 사원들의 정보를 모두 출력
                     System.out.println("===============현재까지 기록된 사원들의 정보를 모두 출력합니다 ===============");
@@ -77,6 +81,7 @@ public class Application {
                         if(employee != null) System.out.println(employee.toString());
                     }
                     break Loop;
+
             }
         }
 
